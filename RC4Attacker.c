@@ -10,6 +10,7 @@
 
 #define MAX_QUEUE_SIZE 5000
 #define NUM_THREADS (get_nprocs() * 2) // Utilize available CPUs effectively
+#define KEY_LENGTH 4
 
 // Structure for a circular queue
 typedef struct
@@ -229,7 +230,7 @@ void *processNumbers(void *arg)
         // Increment the count of checked keys and print progress
         pthread_mutex_lock(&pool->lock);
         pool->checked_keys++;
-        if (pool->checked_keys % 100000 == 0)
+        if (pool->checked_keys % 400000000 == 0)
         {
             printf("We have already checked %ld keys.\n", pool->checked_keys);
         }
@@ -280,14 +281,12 @@ int main()
     // Read ciphertext from standard input
     char ciphertext[200];
     int d;
-    for (int i = 0; (scanf("%d", &d)) != EOF; i++)
+    int i;
+    for (i = 0; (scanf("%d", &d)) != EOF; i++)
     {
         ciphertext[i] = d;
     }
     printf("%s\n", ciphertext);
-
-    const size_t ciphertext_length = strlen(ciphertext);
-    const size_t key_length = 3;
 
     // Initialize CircularQueue and ThreadPool accordig to the given cipher text
     CircularQueue queue;
@@ -295,11 +294,12 @@ int main()
     ThreadPool pool;
     createThreadPool(&pool, &queue);
     queue.ciphertext = ciphertext;
-    queue.ciphertext_length = ciphertext_length;
-    queue.key_length = key_length;
+    queue.ciphertext_length = i;
+    queue.key_length = KEY_LENGTH;
 
     // Enqueue numbers into the circular queue for processing
-    long limit = pow(2, 24);
+    int bits = 8*KEY_LENGTH;
+    long limit = pow(2,bits);
     for (long num = 0; num < limit; ++num)
     {
         enqueue(&queue, num);

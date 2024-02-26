@@ -53,8 +53,8 @@ void rc4_encrypt(const unsigned char *input, size_t input_length, const unsigned
 int main()
 {
     // Sample plaintext and key
-    const char *plaintext = "This is a sample plaintext with a length of 60 characters!!!";
-    const char *key = "MTZ";
+    const char *plaintext = "This is a sample plaintext with a length of 64 characters For RC4";
+    const char *key = "MATZ";
 
     // Calculate lengths of plaintext and key
     size_t plaintext_length = strlen(plaintext);
@@ -73,6 +73,8 @@ int main()
     {
         printf("%d\n", ciphertext[i]);
     }
+
+    // printf("cipher len: %ld\n", strlen(ciphertext));
 
     // Decrypt the ciphertext back to plaintext
     // unsigned char *decrypted_text = malloc(plaintext_length);

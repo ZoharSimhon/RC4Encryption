@@ -25,7 +25,7 @@ This project consists of two C programs, `RC4.c` and `RC4Attacker.c`, implementi
 git clone https://github.com/Mohanadsfe/ParallelPrimeCounter
 
 # Building all the necessary files 
-gcc -o RC4 RC4.c -lm -pthread
+gcc -o RC4 RC4.c -lm
 gcc -o RC4Attacker RC4Attacker.c -lm -pthread
 ```
 
